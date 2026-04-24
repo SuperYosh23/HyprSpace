@@ -29,5 +29,6 @@ rpm-ostree install \
     konsole \
     dolphin
 
-### Enable LightDM
-systemctl enable lightdm.service
+### Enable LightDM (bootc-compatible)
+mkdir -p /etc/systemd/system/display-manager.service.wants
+ln -s /usr/lib/systemd/system/lightdm.service /etc/systemd/system/display-manager.service.wants/lightdm.service
