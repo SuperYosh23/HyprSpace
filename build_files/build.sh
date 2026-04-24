@@ -1,24 +1,33 @@
-#!/bin/bash
+#!/usr/bin/bash
+set -oue pipefail
 
-set -ouex pipefail
+### Install LightDM + greeter
+rpm-ostree install \
+    lightdm \
+    lightdm-gtk \
+    lightdm-gtk-greeter \
+    lightdm-gtk-greeter-settings
 
-### Install packages
+### Install Hyprland + Wayland tools
+rpm-ostree install \
+    hyprland \
+    waybar \
+    wofi \
+    kitty \
+    swww \
+    wl-clipboard \
+    grim \
+    slurp \
+    xdg-desktop-portal-hyprland \
+    xdg-desktop-portal-gtk
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
+### Install KDE Plasma
+rpm-ostree install \
+    plasma-desktop \
+    plasma-workspace \
+    kde-settings \
+    konsole \
+    dolphin
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
-
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
-
-#### Example for enabling a System Unit File
-
-systemctl enable podman.socket
+### Enable LightDM
+systemctl enable lightdm.service
